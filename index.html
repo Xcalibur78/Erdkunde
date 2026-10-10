@@ -4,286 +4,261 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Europa-Quiz 🌍</title>
+<title>Europa-Quiz</title>
 <style>
-:root {
-  --bg: #f3f6ff;
-  --card: #ffffff;
-  --text: #192443;
-  --accent: #4965e9;
-  --muted: #68738e;
-}
 * { box-sizing: border-box; }
 body {
   margin: 0;
-  font-family: system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--text);
+  font-family: system-ui, Arial, sans-serif;
+  background: #f0f4ff;
+  color: #1c2541;
 }
 header {
-  text-align: center;
-  padding: 30px 16px 22px;
-  background: linear-gradient(135deg,#3448bd,#7189ff);
+  background: linear-gradient(135deg,#3048bd,#748bff);
   color: white;
+  text-align: center;
+  padding: 28px 15px;
 }
-header h1 { margin: 0 0 8px; font-size: 2rem; }
-header p { margin: 0; }
-main { max-width: 720px; margin: 22px auto; padding: 0 15px; }
+header h1 { margin: 0 0 8px; }
+main { max-width: 650px; margin: 22px auto; padding: 0 14px; }
 .stats {
   display: grid;
   grid-template-columns: repeat(3,1fr);
   gap: 10px;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
-.stat, .panel {
-  background: var(--card);
-  border-radius: 18px;
-  padding: 17px;
-  box-shadow: 0 4px 18px #263c7410;
+.stat, .quiz {
+  background: white;
+  padding: 16px;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px #17264d12;
 }
 .stat { text-align: center; }
-.stat strong { display: block; font-size: 1.5rem; }
-.stat span { color: var(--muted); font-size: .85rem; }
-.modes {
-  display: grid;
-  grid-template-columns: repeat(3,1fr);
-  gap: 8px;
-  margin-bottom: 18px;
-}
+.stat strong { display:block; font-size: 1.5rem; }
+.stat span { font-size: .85rem; color: #66708a; }
+.modes { display:flex; gap:8px; margin-bottom:16px; }
 button {
-  font: inherit;
-  cursor: pointer;
   border: 0;
-  border-radius: 12px;
-  padding: 12px 10px;
-  background: #e9edff;
-  color: #3045b8;
-  font-weight: 650;
+  border-radius: 11px;
+  padding: 12px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
 }
-button:focus-visible { outline: 3px solid #f0a928; }
-button.active, button.primary {
-  background: var(--accent);
-  color: white;
+.modes button { flex:1; background:#e0e7ff; color:#263da9; }
+.modes button.active, .primary { background:#4059db; color:white; }
+.quiz { text-align:center; padding:24px 18px; }
+#category { color:#596784; font-size:.85rem; text-transform:uppercase; letter-spacing:1px; }
+#question { font-size:1.5rem; margin:16px 0; }
+#flag {
+  display:block;
+  width:180px;
+  height:120px;
+  object-fit:contain;
+  margin:18px auto;
+  border-radius:5px;
 }
-button:disabled { cursor: default; opacity: .7; }
-.panel { text-align: center; }
-.kicker {
-  color: var(--muted);
-  font-size: .85rem;
-  text-transform: uppercase;
-  letter-spacing: .08em;
-}
-#clue { font-size: 1.3rem; font-weight: 700; margin: 12px 0; }
-#flag { font-size: 5rem; line-height: 1.3; margin: 10px; }
+#flag[hidden] { display:none; }
+#emoji { font-size:5rem; line-height:1.3; }
+#emoji[hidden] { display:none; }
 #options {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 22px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:20px;
 }
-.option {
-  min-height: 58px;
-  background: #f1f3fb;
-  color: var(--text);
-  border: 2px solid transparent;
+.answer {
+  background:#f0f3fc;
+  color:#1c2541;
+  min-height:56px;
+  border:2px solid transparent;
 }
-.option:hover:not(:disabled) { border-color: var(--accent); }
-.option.correct { background: #d9f7e6; border-color: #23965a; color: #12643a; }
-.option.wrong { background: #ffe1e1; border-color: #d84d4d; color: #8e2222; }
-#feedback { min-height: 30px; margin: 16px 0 8px; font-weight: 650; }
-.actions { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-.progress {
-  height: 8px;
-  background: #e7eaf5;
-  border-radius: 99px;
-  overflow: hidden;
-  margin: 15px 0;
-}
-#bar { height: 100%; width: 0; background: #6478f1; transition: width .2s; }
-.small { font-size: .88rem; color: var(--muted); }
-footer { text-align: center; padding: 20px; color: var(--muted); }
-@media(max-width:480px) {
-  header h1 { font-size: 1.65rem; }
-  .modes { grid-template-columns: 1fr; }
-  #options { grid-template-columns: 1fr; }
-  .stat { padding: 12px 5px; }
+.answer:hover:not(:disabled) { border-color:#4059db; }
+.answer.correct { background:#d7f8e4; border-color:#24975a; }
+.answer.wrong { background:#ffe0e0; border-color:#d54b4b; }
+#feedback { min-height:28px; margin:18px 0; font-weight:700; }
+.actions { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
+#next { background:#4059db; color:white; }
+#progress { height:8px; background:#e5e9f5; border-radius:8px; overflow:hidden; margin-top:20px; }
+#bar { height:100%; background:#4059db; width:0; }
+@media(max-width:420px) {
+  .modes { flex-direction:column; }
+  #options { grid-template-columns:1fr; }
+  #question { font-size:1.25rem; }
 }
 </style>
 </head>
 <body>
+
 <header>
   <h1>🌍 Europa-Quiz</h1>
-  <p>Kennst du Europas Länder, Hauptstädte und Flaggen?</p>
+  <div>Lerne Länder, Hauptstädte und Flaggen!</div>
 </header>
 
 <main>
-  <section class="stats">
+  <div class="stats">
     <div class="stat"><strong id="score">0</strong><span>Punkte</span></div>
-    <div class="stat"><strong id="round">0</strong><span>Beantwortet</span></div>
-    <div class="stat"><strong id="streak">0</strong><span>Richtige in Folge</span></div>
-  </section>
+    <div class="stat"><strong id="round">0</strong><span>Fragen</span></div>
+    <div class="stat"><strong id="streak">0</strong><span>Richtig in Folge</span></div>
+  </div>
 
-  <nav class="modes" aria-label="Quizmodus">
-    <button class="active" data-mode="capital">🏙️ Hauptstadt</button>
-    <button data-mode="flag">🏳️ Flagge</button>
-    <button data-mode="country">🌍 Land</button>
-  </nav>
+  <div class="modes">
+    <button class="active" data-mode="capital">🏙️ Hauptstädte</button>
+    <button data-mode="flag">🏳️ Flaggen</button>
+    <button data-mode="country">🌍 Länder</button>
+  </div>
 
-  <section class="panel">
-    <div class="kicker" id="modeTitle">Hauptstadt gesucht</div>
-    <div id="flag" aria-hidden="true"></div>
-    <div id="clue">Welches Land hat diese Hauptstadt?</div>
-    <div class="progress"><div id="bar"></div></div>
-    <div id="options" aria-label="Antwortmöglichkeiten"></div>
+  <section class="quiz">
+    <div id="category">HAUPTSTÄDTE</div>
+    <div id="question">Welche Hauptstadt hat Deutschland?</div>
+    <img id="flag" alt="Flagge des Landes" hidden>
+    <div id="emoji" hidden></div>
+
+    <div id="options"></div>
     <div id="feedback" aria-live="polite"></div>
+
     <div class="actions">
-      <button id="next" class="primary" hidden>Nächste Frage →</button>
-      <button id="restart">↻ Neu starten</button>
+      <button id="next" hidden>Nächste Frage →</button>
+      <button id="restart">Neu starten ↻</button>
     </div>
-    <p class="small">Tipp: Versuche, vor dem Antworten selbst nachzudenken.</p>
+    <div id="progress"><div id="bar"></div></div>
   </section>
 </main>
-<footer>Made for curious minds · Europa entdecken 🇪🇺</footer>
 
 <script>
 const countries = [
-["Albanien","Tirana","🇦🇱"],
-["Andorra","Andorra la Vella","🇦🇩"],
-["Belarus","Minsk","🇧🇾"],
-["Belgien","Brüssel","🇧🇪"],
-["Bosnien und Herzegowina","Sarajevo","🇧🇦"],
-["Bulgarien","Sofia","🇧🇬"],
-["Dänemark","Kopenhagen","🇩🇰"],
-["Deutschland","Berlin","🇩🇪"],
-["Estland","Tallinn","🇪🇪"],
-["Finnland","Helsinki","🇫🇮"],
-["Frankreich","Paris","🇫🇷"],
-["Griechenland","Athen","🇬🇷"],
-["Irland","Dublin","🇮🇪"],
-["Island","Reykjavík","🇮🇸"],
-["Italien","Rom","🇮🇹"],
-["Kosovo","Pristina","🇽🇰"],
-["Kroatien","Zagreb","🇭🇷"],
-["Lettland","Riga","🇱🇻"],
-["Liechtenstein","Vaduz","🇱🇮"],
-["Litauen","Vilnius","🇱🇹"],
-["Luxemburg","Luxemburg","🇱🇺"],
-["Malta","Valletta","🇲🇹"],
-["Moldau","Chișinău","🇲🇩"],
-["Monaco","Monaco","🇲🇨"],
-["Montenegro","Podgorica","🇲🇪"],
-["Niederlande","Amsterdam","🇳🇱"],
-["Nordmazedonien","Skopje","🇲🇰"],
-["Norwegen","Oslo","🇳🇴"],
-["Österreich","Wien","🇦🇹"],
-["Polen","Warschau","🇵🇱"],
-["Portugal","Lissabon","🇵🇹"],
-["Rumänien","Bukarest","🇷🇴"],
-["Russland","Moskau","🇷🇺"],
-["San Marino","San Marino","🇸🇲"],
-["Schweden","Stockholm","🇸🇪"],
-["Schweiz","Bern","🇨🇭"],
-["Serbien","Belgrad","🇷🇸"],
-["Slowakei","Bratislava","🇸🇰"],
-["Slowenien","Ljubljana","🇸🇮"],
-["Spanien","Madrid","🇪🇸"],
-["Tschechien","Prag","🇨🇿"],
-["Türkei","Ankara","🇹🇷"],
-["Ukraine","Kyjiw","🇺🇦"],
-["Ungarn","Budapest","🇭🇺"],
-["Vatikanstadt","Vatikanstadt","🇻🇦"],
-["Vereinigtes Königreich","London","🇬🇧"],
-["Zypern","Nikosia","🇨🇾"]
-].map(([land, hauptstadt, flag]) => ({land, hauptstadt, flag}));
+ ["Albanien","Tirana","al"],["Andorra","Andorra la Vella","ad"],
+ ["Belarus","Minsk","by"],["Belgien","Brüssel","be"],
+ ["Bosnien und Herzegowina","Sarajevo","ba"],["Bulgarien","Sofia","bg"],
+ ["Dänemark","Kopenhagen","dk"],["Deutschland","Berlin","de"],
+ ["Estland","Tallinn","ee"],["Finnland","Helsinki","fi"],
+ ["Frankreich","Paris","fr"],["Griechenland","Athen","gr"],
+ ["Irland","Dublin","ie"],["Island","Reykjavík","is"],
+ ["Italien","Rom","it"],["Kosovo","Pristina","xk"],
+ ["Kroatien","Zagreb","hr"],["Lettland","Riga","lv"],
+ ["Liechtenstein","Vaduz","li"],["Litauen","Vilnius","lt"],
+ ["Luxemburg","Luxemburg","lu"],["Malta","Valletta","mt"],
+ ["Moldau","Chișinău","md"],["Monaco","Monaco","mc"],
+ ["Montenegro","Podgorica","me"],["Niederlande","Amsterdam","nl"],
+ ["Nordmazedonien","Skopje","mk"],["Norwegen","Oslo","no"],
+ ["Österreich","Wien","at"],["Polen","Warschau","pl"],
+ ["Portugal","Lissabon","pt"],["Rumänien","Bukarest","ro"],
+ ["Russland","Moskau","ru"],["San Marino","San Marino","sm"],
+ ["Schweden","Stockholm","se"],["Schweiz","Bern","ch"],
+ ["Serbien","Belgrad","rs"],["Slowakei","Bratislava","sk"],
+ ["Slowenien","Ljubljana","si"],["Spanien","Madrid","es"],
+ ["Tschechien","Prag","cz"],["Türkei","Ankara","tr"],
+ ["Ukraine","Kyjiw (Kiew)","ua"],["Ungarn","Budapest","hu"],
+ ["Vatikanstadt","Vatikanstadt","va"],
+ ["Vereinigtes Königreich","London","gb"],["Zypern","Nikosia","cy"]
+].map(([land, hauptstadt, code]) => ({land, hauptstadt, code}));
 
 const $ = id => document.getElementById(id);
 let mode = "capital";
-let current = null;
+let current;
 let answered = false;
-let score = 0;
-let round = 0;
-let streak = 0;
-let bestStreak = 0;
-let deck = [];
-let deckIndex = 0;
-
-const modeNames = {
-  capital: "Hauptstadt gesucht",
-  flag: "Land anhand der Flagge",
-  country: "Land gesucht"
-};
+let score = 0, round = 0, streak = 0;
+let deck = [], position = 0;
 
 function shuffle(arr) {
-  const copy = [...arr];
-  for (let i = copy.length - 1; i > 0; i--) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [copy[i], copy[j]] = [copy[j], copy[i]];
+    [a[i], a[j]] = [a[j], a[i]];
   }
-  return copy;
+  return a;
+}
+
+function emojiFlag(code) {
+  return code.toUpperCase().replace(/[A-Z]/g,
+    c => String.fromCodePoint(127397 + c.charCodeAt(0)));
 }
 
 function newDeck() {
   deck = shuffle(countries);
-  deckIndex = 0;
+  position = 0;
 }
 
 function nextQuestion() {
-  if (deckIndex >= deck.length) newDeck();
-  current = deck[deckIndex++];
+  if (position >= deck.length) newDeck();
+  current = deck[position++];
   answered = false;
-  $("modeTitle").textContent = modeNames[mode];
-  $("flag").textContent = mode === "flag" ? current.flag : "";
-  $("clue").textContent = mode === "capital"
-    ? "Welches Land hat diese Hauptstadt?"
-    : mode === "flag"
-    ? "Zu welchem Land gehört diese Flagge?"
-    : "Wie heißt die Hauptstadt dieses Landes?";
+
   $("feedback").textContent = "";
   $("next").hidden = true;
-  $("bar").style.width = (round % 10) * 10 + "%";
+  $("flag").hidden = true;
+  $("emoji").hidden = true;
 
-  let correct = mode === "capital"
-    ? current.land
-    : mode === "flag"
-    ? current.land
-    : current.hauptstadt;
+  let correct;
+  if (mode === "capital") {
+    $("category").textContent = "HAUPTSTADT-RÄTSEL";
+    $("question").textContent =
+      "Wie heißt die Hauptstadt von " + current.land + "?";
+    correct = current.hauptstadt;
+  } else if (mode === "flag") {
+    $("category").textContent = "FLAGGEN-RÄTSEL";
+    $("question").textContent = "Zu welchem Land gehört diese Flagge?";
+    correct = current.land;
 
-  const others = shuffle(countries.filter(c => c !== current)).slice(0, 3);
-  const options = shuffle([correct, ...others.map(c =>
-    mode === "country" ? c.hauptstadt : c.land
-  )]);
+    $("flag").src = "https://flagcdn.com/w320/" + current.code + ".png";
+    $("flag").alt = "Flagge: " + current.land;
+    $("flag").hidden = false;
+    $("emoji").textContent = emojiFlag(current.code);
+    $("emoji").hidden = false;
 
-  $("options").replaceChildren();
+    $("flag").onload = () => { $("emoji").hidden = true; };
+    $("flag").onerror = () => {
+      $("flag").hidden = true;
+      $("emoji").hidden = false;
+    };
+  } else {
+    $("category").textContent = "LÄNDER-RÄTSEL";
+    $("question").textContent =
+      "Welches Land hat die Hauptstadt " + current.hauptstadt + "?";
+    correct = current.land;
+  }
+
+  const otherCountries = shuffle(countries.filter(c => c !== current)).slice(0,3);
+  const options = shuffle([
+    correct,
+    ...otherCountries.map(c =>
+      mode === "capital" ? c.hauptstadt : c.land
+    )
+  ]);
+
+  const container = $("options");
+  container.replaceChildren();
+
   options.forEach(option => {
     const button = document.createElement("button");
-    button.className = "option";
+    button.className = "answer";
     button.textContent = option;
     button.addEventListener("click", () => choose(option, correct, button));
-    $("options").appendChild(button);
+    container.appendChild(button);
   });
+
+  $("bar").style.width = (round % 10) * 10 + "%";
 }
 
-function choose(option, correct, button) {
+function choose(answer, correct, button) {
   if (answered) return;
   answered = true;
   round++;
 
-  const buttons = [...$("options").children];
-  buttons.forEach(b => {
+  [...$("options").children].forEach(b => {
     b.disabled = true;
     if (b.textContent === correct) b.classList.add("correct");
   });
 
-  if (option === correct) {
+  if (answer === correct) {
     score += 10;
     streak++;
-    bestStreak = Math.max(bestStreak, streak);
-    $("feedback").textContent = "🎉 Richtig! +10 Punkte";
+    $("feedback").textContent = "✅ Richtig! +10 Punkte";
     $("feedback").style.color = "#16834b";
   } else {
     streak = 0;
     button.classList.add("wrong");
-    $("feedback").textContent = "❌ Leider falsch. Richtig ist: " + correct;
+    $("feedback").textContent = "❌ Richtig wäre: " + correct;
     $("feedback").style.color = "#c33737";
   }
 
