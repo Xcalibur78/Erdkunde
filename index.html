@@ -4,23 +4,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Europa-Quiz</title>
+<title>Europa-Quiz 🌍</title>
 <style>
+:root {
+  --blue: #4059db;
+  --light: #edf1ff;
+  --green: #16834b;
+  --red: #c33737;
+  --text: #202944;
+  --muted: #68738e;
+}
 * { box-sizing: border-box; }
 body {
   margin: 0;
   font-family: system-ui, Arial, sans-serif;
-  background: #f0f4ff;
-  color: #1c2541;
+  background: #f2f5ff;
+  color: var(--text);
 }
 header {
-  background: linear-gradient(135deg,#3048bd,#748bff);
-  color: white;
   text-align: center;
   padding: 28px 15px;
+  color: white;
+  background: linear-gradient(135deg, #3048bd, #788dff);
 }
-header h1 { margin: 0 0 8px; }
-main { max-width: 650px; margin: 22px auto; padding: 0 14px; }
+header h1 { margin: 0 0 8px; font-size: 2rem; }
+header p { margin: 0; }
+main { max-width: 720px; margin: 22px auto; padding: 0 14px; }
 .stats {
   display: grid;
   grid-template-columns: repeat(3,1fr);
@@ -29,62 +38,117 @@ main { max-width: 650px; margin: 22px auto; padding: 0 14px; }
 }
 .stat, .quiz {
   background: white;
-  padding: 16px;
-  border-radius: 16px;
-  box-shadow: 0 4px 15px #17264d12;
+  border-radius: 17px;
+  padding: 17px;
+  box-shadow: 0 4px 18px #17264d10;
 }
 .stat { text-align: center; }
-.stat strong { display:block; font-size: 1.5rem; }
-.stat span { font-size: .85rem; color: #66708a; }
-.modes { display:flex; gap:8px; margin-bottom:16px; }
+.stat strong { display: block; font-size: 1.5rem; }
+.stat span { font-size: .82rem; color: var(--muted); }
+.modes {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 9px;
+  margin-bottom: 16px;
+}
 button {
   border: 0;
-  border-radius: 11px;
-  padding: 12px;
+  border-radius: 12px;
+  padding: 13px 10px;
   font: inherit;
-  font-weight: 600;
+  font-weight: 650;
   cursor: pointer;
 }
-.modes button { flex:1; background:#e0e7ff; color:#263da9; }
-.modes button.active, .primary { background:#4059db; color:white; }
-.quiz { text-align:center; padding:24px 18px; }
-#category { color:#596784; font-size:.85rem; text-transform:uppercase; letter-spacing:1px; }
-#question { font-size:1.5rem; margin:16px 0; }
-#flag {
-  display:block;
-  width:180px;
-  height:120px;
-  object-fit:contain;
-  margin:18px auto;
-  border-radius:5px;
+button:focus-visible { outline: 3px solid #f2b844; }
+.modes button { background: #e1e8ff; color: #3045b8; }
+.modes button.active, .primary {
+  background: var(--blue);
+  color: white;
 }
-#flag[hidden] { display:none; }
-#emoji { font-size:5rem; line-height:1.3; }
-#emoji[hidden] { display:none; }
+.quiz { text-align: center; padding: 24px 18px; }
+#category {
+  color: var(--muted);
+  font-size: .82rem;
+  letter-spacing: .1em;
+  font-weight: 700;
+}
+#question { font-size: 1.4rem; margin: 16px 0; }
+#flag {
+  display: block;
+  width: 180px;
+  height: 120px;
+  object-fit: contain;
+  margin: 18px auto;
+}
+#flag[hidden], #outline[hidden] { display: none; }
+#outline {
+  width: 100%;
+  max-width: 370px;
+  height: 245px;
+  margin: 8px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#outline svg { width: 100%; height: 100%; }
+#emoji { font-size: 4.5rem; margin: 12px; }
+#emoji[hidden] { display: none; }
 #options {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 20px;
 }
 .answer {
-  background:#f0f3fc;
-  color:#1c2541;
-  min-height:56px;
-  border:2px solid transparent;
+  min-height: 55px;
+  background: #f0f3fc;
+  color: var(--text);
+  border: 2px solid transparent;
+  overflow-wrap: anywhere;
 }
-.answer:hover:not(:disabled) { border-color:#4059db; }
-.answer.correct { background:#d7f8e4; border-color:#24975a; }
-.answer.wrong { background:#ffe0e0; border-color:#d54b4b; }
-#feedback { min-height:28px; margin:18px 0; font-weight:700; }
-.actions { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; }
-#next { background:#4059db; color:white; }
-#progress { height:8px; background:#e5e9f5; border-radius:8px; overflow:hidden; margin-top:20px; }
-#bar { height:100%; background:#4059db; width:0; }
-@media(max-width:420px) {
-  .modes { flex-direction:column; }
-  #options { grid-template-columns:1fr; }
-  #question { font-size:1.25rem; }
+.answer:hover:not(:disabled) { border-color: var(--blue); }
+.answer.correct {
+  background: #d9f7e5;
+  border-color: #23965a;
+  color: #12643a;
+}
+.answer.wrong {
+  background: #ffe2e2;
+  border-color: #d84d4d;
+  color: #8e2222;
+}
+#feedback {
+  min-height: 28px;
+  margin: 17px 0;
+  font-weight: 700;
+}
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+#next { background: var(--blue); color: white; }
+#progress {
+  height: 8px;
+  background: #e5e9f5;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 22px;
+}
+#bar {
+  height: 100%;
+  width: 0;
+  background: var(--blue);
+  transition: width .2s;
+}
+.small { color: var(--muted); font-size: .85rem; }
+footer { text-align: center; color: var(--muted); padding: 20px; }
+@media(max-width: 430px) {
+  header h1 { font-size: 1.7rem; }
+  #options { grid-template-columns: 1fr; }
+  #question { font-size: 1.2rem; }
+  .quiz { padding: 20px 13px; }
 }
 </style>
 </head>
@@ -92,86 +156,149 @@ button {
 
 <header>
   <h1>🌍 Europa-Quiz</h1>
-  <div>Lerne Länder, Hauptstädte und Flaggen!</div>
+  <p>Entdecke Europas Länder, Flaggen und Hauptstädte!</p>
 </header>
 
 <main>
-  <div class="stats">
-    <div class="stat"><strong id="score">0</strong><span>Punkte</span></div>
-    <div class="stat"><strong id="round">0</strong><span>Fragen</span></div>
-    <div class="stat"><strong id="streak">0</strong><span>Richtig in Folge</span></div>
-  </div>
+  <section class="stats">
+    <div class="stat">
+      <strong id="score">0</strong>
+      <span>Punkte</span>
+    </div>
+    <div class="stat">
+      <strong id="round">0</strong>
+      <span>Beantwortet</span>
+    </div>
+    <div class="stat">
+      <strong id="streak">0</strong>
+      <span>Richtig in Folge</span>
+    </div>
+  </section>
 
-  <div class="modes">
+  <nav class="modes" aria-label="Quizmodus">
     <button class="active" data-mode="capital">🏙️ Hauptstädte</button>
     <button data-mode="flag">🏳️ Flaggen</button>
     <button data-mode="country">🌍 Länder</button>
-  </div>
+    <button data-mode="outline">🗺️ Umrisse</button>
+  </nav>
 
   <section class="quiz">
-    <div id="category">HAUPTSTÄDTE</div>
-    <div id="question">Welche Hauptstadt hat Deutschland?</div>
-    <img id="flag" alt="Flagge des Landes" hidden>
+    <div id="category">HAUPTSTADT-RÄTSEL</div>
+    <h2 id="question">Wie heißt die Hauptstadt von Deutschland?</h2>
+
+    <img id="flag" alt="Flagge des gesuchten Landes" hidden>
     <div id="emoji" hidden></div>
+    <div id="outline" hidden aria-label="Geografischer Umriss"></div>
 
     <div id="options"></div>
     <div id="feedback" aria-live="polite"></div>
 
     <div class="actions">
       <button id="next" hidden>Nächste Frage →</button>
-      <button id="restart">Neu starten ↻</button>
+      <button id="restart">↻ Neu starten</button>
     </div>
+
     <div id="progress"><div id="bar"></div></div>
+    <p class="small">Für jede richtige Antwort erhältst du 10 Punkte.</p>
   </section>
 </main>
 
+<footer>Europa entdecken · Lernen mit Spaß 🌍</footer>
+
+<!-- Die Bibliothek zeichnet geografische Daten als SVG. -->
+<script src="https://cdn.jsdelivr.net/npm/d3-geo@3/dist/d3-geo.min.js"></script>
+
 <script>
+"use strict";
+
+// Ländername, Hauptstadt, ISO-Flaggencode, Name im Kartendatensatz
 const countries = [
- ["Albanien","Tirana","al"],["Andorra","Andorra la Vella","ad"],
- ["Belarus","Minsk","by"],["Belgien","Brüssel","be"],
- ["Bosnien und Herzegowina","Sarajevo","ba"],["Bulgarien","Sofia","bg"],
- ["Dänemark","Kopenhagen","dk"],["Deutschland","Berlin","de"],
- ["Estland","Tallinn","ee"],["Finnland","Helsinki","fi"],
- ["Frankreich","Paris","fr"],["Griechenland","Athen","gr"],
- ["Irland","Dublin","ie"],["Island","Reykjavík","is"],
- ["Italien","Rom","it"],["Kosovo","Pristina","xk"],
- ["Kroatien","Zagreb","hr"],["Lettland","Riga","lv"],
- ["Liechtenstein","Vaduz","li"],["Litauen","Vilnius","lt"],
- ["Luxemburg","Luxemburg","lu"],["Malta","Valletta","mt"],
- ["Moldau","Chișinău","md"],["Monaco","Monaco","mc"],
- ["Montenegro","Podgorica","me"],["Niederlande","Amsterdam","nl"],
- ["Nordmazedonien","Skopje","mk"],["Norwegen","Oslo","no"],
- ["Österreich","Wien","at"],["Polen","Warschau","pl"],
- ["Portugal","Lissabon","pt"],["Rumänien","Bukarest","ro"],
- ["Russland","Moskau","ru"],["San Marino","San Marino","sm"],
- ["Schweden","Stockholm","se"],["Schweiz","Bern","ch"],
- ["Serbien","Belgrad","rs"],["Slowakei","Bratislava","sk"],
- ["Slowenien","Ljubljana","si"],["Spanien","Madrid","es"],
- ["Tschechien","Prag","cz"],["Türkei","Ankara","tr"],
- ["Ukraine","Kyjiw (Kiew)","ua"],["Ungarn","Budapest","hu"],
- ["Vatikanstadt","Vatikanstadt","va"],
- ["Vereinigtes Königreich","London","gb"],["Zypern","Nikosia","cy"]
-].map(([land, hauptstadt, code]) => ({land, hauptstadt, code}));
+ ["Albanien","Tirana","al","Albania"],
+ ["Andorra","Andorra la Vella","ad","Andorra"],
+ ["Belarus","Minsk","by","Belarus"],
+ ["Belgien","Brüssel","be","Belgium"],
+ ["Bosnien und Herzegowina","Sarajevo","ba","Bosnia and Herzegovina"],
+ ["Bulgarien","Sofia","bg","Bulgaria"],
+ ["Dänemark","Kopenhagen","dk","Denmark"],
+ ["Deutschland","Berlin","de","Germany"],
+ ["Estland","Tallinn","ee","Estonia"],
+ ["Finnland","Helsinki","fi","Finland"],
+ ["Frankreich","Paris","fr","France"],
+ ["Griechenland","Athen","gr","Greece"],
+ ["Irland","Dublin","ie","Ireland"],
+ ["Island","Reykjavík","is","Iceland"],
+ ["Italien","Rom","it","Italy"],
+ ["Kosovo","Pristina","xk","Kosovo"],
+ ["Kroatien","Zagreb","hr","Croatia"],
+ ["Lettland","Riga","lv","Latvia"],
+ ["Liechtenstein","Vaduz","li","Liechtenstein"],
+ ["Litauen","Vilnius","lt","Lithuania"],
+ ["Luxemburg","Luxemburg","lu","Luxembourg"],
+ ["Malta","Valletta","mt","Malta"],
+ ["Moldau","Chișinău","md","Moldova"],
+ ["Monaco","Monaco","mc","Monaco"],
+ ["Montenegro","Podgorica","me","Montenegro"],
+ ["Niederlande","Amsterdam","nl","Netherlands"],
+ ["Nordmazedonien","Skopje","mk","North Macedonia"],
+ ["Norwegen","Oslo","no","Norway"],
+ ["Österreich","Wien","at","Austria"],
+ ["Polen","Warschau","pl","Poland"],
+ ["Portugal","Lissabon","pt","Portugal"],
+ ["Rumänien","Bukarest","ro","Romania"],
+ ["Russland","Moskau","ru","Russia"],
+ ["San Marino","San Marino","sm","San Marino"],
+ ["Schweden","Stockholm","se","Sweden"],
+ ["Schweiz","Bern","ch","Switzerland"],
+ ["Serbien","Belgrad","rs","Serbia"],
+ ["Slowakei","Bratislava","sk","Slovakia"],
+ ["Slowenien","Ljubljana","si","Slovenia"],
+ ["Spanien","Madrid","es","Spain"],
+ ["Tschechien","Prag","cz","Czechia"],
+ ["Türkei","Ankara","tr","Turkey"],
+ ["Ukraine","Kyjiw (Kiew)","ua","Ukraine"],
+ ["Ungarn","Budapest","hu","Hungary"],
+ ["Vatikanstadt","Vatikanstadt","va","Vatican"],
+ ["Vereinigtes Königreich","London","gb","United Kingdom"],
+ ["Zypern","Nikosia","cy","Cyprus"]
+].map(([land,hauptstadt,code,mapName]) =>
+ ({land,hauptstadt,code,mapName}));
 
 const $ = id => document.getElementById(id);
+
 let mode = "capital";
-let current;
+let current = null;
 let answered = false;
-let score = 0, round = 0, streak = 0;
-let deck = [], position = 0;
+let score = 0;
+let round = 0;
+let streak = 0;
+let deck = [];
+let position = 0;
+let mapFeatures = [];
+let mapStatus = "loading";
 
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
+// Download real country boundaries once.
+const mapPromise = (async () => {
+  try {
+    const response = await fetch(
+      "https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson"
+    );
+    if (!response.ok) throw new Error("Kartendaten nicht erreichbar");
+    const geojson = await response.json();
+    mapFeatures = geojson.features;
+    mapStatus = "ready";
+  } catch (error) {
+    mapStatus = "error";
+    console.error("Karten konnten nicht geladen werden:", error);
   }
-  return a;
-}
+})();
 
-function emojiFlag(code) {
-  return code.toUpperCase().replace(/[A-Z]/g,
-    c => String.fromCodePoint(127397 + c.charCodeAt(0)));
+function shuffle(array) {
+  const result = [...array];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i],result[j]] = [result[j],result[i]];
+  }
+  return result;
 }
 
 function newDeck() {
@@ -179,7 +306,58 @@ function newDeck() {
   position = 0;
 }
 
-function nextQuestion() {
+function showOutline(country) {
+  const container = $("outline");
+  container.replaceChildren();
+
+  if (mapStatus === "loading") {
+    container.textContent = "Karte wird geladen …";
+    return false;
+  }
+
+  if (mapStatus !== "ready" || !window.d3) {
+    container.textContent =
+      "Der Länderumriss konnte nicht geladen werden. Bitte prüfe deine Internetverbindung.";
+    return false;
+  }
+
+  const feature = mapFeatures.find(f => {
+    const p = f.properties || {};
+    return [p.ADMIN,p.name,p.NAME,p.ADMIN_NAME]
+      .some(n => n && n.toLowerCase() === country.mapName.toLowerCase());
+  });
+
+  if (!feature) {
+    container.textContent =
+      "Für dieses Land ist kein Umriss verfügbar. Wähle die nächste Frage.";
+    return false;
+  }
+
+  const width = 340;
+  const height = 235;
+  const svgNS = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(svgNS,"svg");
+  svg.setAttribute("viewBox",`0 0 ${width} ${height}`);
+  svg.setAttribute("role","img");
+  svg.setAttribute("aria-label","Umriss von " + country.land);
+
+  const projection = d3.geoMercator()
+    .fitExtent([[20,15],[width-20,height-15]],feature);
+
+  const pathGenerator = d3.geoPath(projection);
+  const path = document.createElementNS(svgNS,"path");
+  path.setAttribute("d",pathGenerator(feature));
+  path.setAttribute("fill","#dbe5ff");
+  path.setAttribute("stroke","#4059db");
+  path.setAttribute("stroke-width","2.5");
+  path.setAttribute("stroke-linejoin","round");
+
+  svg.appendChild(path);
+  container.appendChild(svg);
+  return true;
+}
+
+async function nextQuestion() {
   if (position >= deck.length) newDeck();
   current = deck[position++];
   answered = false;
@@ -187,9 +365,14 @@ function nextQuestion() {
   $("feedback").textContent = "";
   $("next").hidden = true;
   $("flag").hidden = true;
+  $("outline").hidden = true;
   $("emoji").hidden = true;
+  $("options").replaceChildren();
+  $("category").textContent = "";
+  $("question").textContent = "";
 
   let correct;
+
   if (mode === "capital") {
     $("category").textContent = "HAUPTSTADT-RÄTSEL";
     $("question").textContent =
@@ -197,50 +380,70 @@ function nextQuestion() {
     correct = current.hauptstadt;
   } else if (mode === "flag") {
     $("category").textContent = "FLAGGEN-RÄTSEL";
-    $("question").textContent = "Zu welchem Land gehört diese Flagge?";
+    $("question").textContent =
+      "Zu welchem Land gehört diese Flagge?";
     correct = current.land;
 
-    $("flag").src = "https://flagcdn.com/w320/" + current.code + ".png";
-    $("flag").alt = "Flagge: " + current.land;
+    $("flag").src =
+      "https://flagcdn.com/w320/" + current.code + ".png";
+    $("flag").alt = "Flagge von " + current.land;
     $("flag").hidden = false;
-    $("emoji").textContent = emojiFlag(current.code);
-    $("emoji").hidden = false;
 
-    $("flag").onload = () => { $("emoji").hidden = true; };
     $("flag").onerror = () => {
       $("flag").hidden = true;
+      $("emoji").textContent = flagEmoji(current.code);
       $("emoji").hidden = false;
     };
-  } else {
+  } else if (mode === "country") {
     $("category").textContent = "LÄNDER-RÄTSEL";
     $("question").textContent =
       "Welches Land hat die Hauptstadt " + current.hauptstadt + "?";
     correct = current.land;
+  } else {
+    $("category").textContent = "UMRISS-RÄTSEL";
+    $("question").textContent =
+      "Welches Land erkennst du an seinem Umriss?";
+
+    $("outline").hidden = false;
+    $("outline").textContent = "Karten werden geladen …";
+
+    await mapPromise;
+
+    // A user may have switched modes while the map was loading.
+    if (mode !== "outline" || answered) return;
+
+    showOutline(current);
+    correct = current.land;
   }
 
-  const otherCountries = shuffle(countries.filter(c => c !== current)).slice(0,3);
-  const options = shuffle([
-    correct,
-    ...otherCountries.map(c =>
-      mode === "capital" ? c.hauptstadt : c.land
-    )
-  ]);
+  if (mode !== "outline") {
+    buildOptions(correct);
+  } else {
+    buildOptions(current.land);
+  }
 
-  const container = $("options");
-  container.replaceChildren();
+  $("bar").style.width = (round % 10) * 10 + "%";
+}
+
+function buildOptions(correct) {
+  const isCapital = mode === "capital";
+  const pool = countries.filter(c => c !== current);
+  const wrong = shuffle(pool).slice(0,3).map(c =>
+    isCapital ? c.hauptstadt : c.land
+  );
+  const options = shuffle([correct,...wrong]);
 
   options.forEach(option => {
     const button = document.createElement("button");
     button.className = "answer";
     button.textContent = option;
-    button.addEventListener("click", () => choose(option, correct, button));
-    container.appendChild(button);
+    button.addEventListener("click", () =>
+      choose(option,correct,button));
+    $("options").appendChild(button);
   });
-
-  $("bar").style.width = (round % 10) * 10 + "%";
 }
 
-function choose(answer, correct, button) {
+function choose(answer,correct,button) {
   if (answered) return;
   answered = true;
   round++;
@@ -258,7 +461,7 @@ function choose(answer, correct, button) {
   } else {
     streak = 0;
     button.classList.add("wrong");
-    $("feedback").textContent = "❌ Richtig wäre: " + correct;
+    $("feedback").textContent = "❌ Richtige Antwort: " + correct;
     $("feedback").style.color = "#c33737";
   }
 
@@ -269,20 +472,24 @@ function choose(answer, correct, button) {
   $("next").hidden = false;
 }
 
+function flagEmoji(code) {
+  return code.toUpperCase().replace(/[A-Z]/g,
+    c => String.fromCodePoint(127397 + c.charCodeAt(0)));
+}
+
 document.querySelectorAll("[data-mode]").forEach(button => {
-  button.addEventListener("click", () => {
+  button.addEventListener("click",() => {
     mode = button.dataset.mode;
     document.querySelectorAll("[data-mode]").forEach(b =>
-      b.classList.toggle("active", b === button)
-    );
+      b.classList.toggle("active",b === button));
     newDeck();
     nextQuestion();
   });
 });
 
-$("next").addEventListener("click", nextQuestion);
+$("next").addEventListener("click",nextQuestion);
 
-$("restart").addEventListener("click", () => {
+$("restart").addEventListener("click",() => {
   score = 0;
   round = 0;
   streak = 0;
